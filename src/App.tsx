@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import MatchupCard from "./components/MatchupCard";
 
 interface Player {
   id: number;
@@ -63,24 +64,7 @@ function App() {
 
         <div className="matchups-container">
           {matchups.map((matchup, index) => (
-            <div key={index} className="matchup-card">
-              <h3>Matchup {index + 1}</h3>
-              <div className="teams">
-                <div className="team">
-                  <h4>Team 1</h4>
-                  <p>
-                    {matchup.team1[0].name} & {matchup.team1[1].name}
-                  </p>
-                </div>
-                <div className="vs">VS</div>
-                <div className="team">
-                  <h4>Team 2</h4>
-                  <p>
-                    {matchup.team2[0].name} & {matchup.team2[1].name}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <MatchupCard key={index} matchup={matchup} index={index} />
           ))}
         </div>
       </header>
