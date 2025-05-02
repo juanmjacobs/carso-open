@@ -61,6 +61,26 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Carso Open - Paddle Match Organizer</h1>
+        <button
+          className="reset-all-scores-button"
+          onClick={() => {
+            if (
+              window.confirm(
+                "¿Estás seguro que quieres borrar todos los scores guardados?"
+              )
+            ) {
+              // Clear all matchup scores from localStorage
+              for (let i = 0; i < matchups.length; i++) {
+                localStorage.removeItem(`matchup-${i}-scores`);
+              }
+              // Force a re-render of all matchups
+              setMatchups([...matchups]);
+              window.location.reload();
+            }
+          }}
+        >
+          Resetear Scores
+        </button>
 
         <div className="matchups-container">
           {matchups.map((matchup, index) => (
