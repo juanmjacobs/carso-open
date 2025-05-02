@@ -66,6 +66,16 @@ const MatchupCard: React.FC<MatchupCardProps> = ({ matchup, index }) => {
           </div>
         </div>
       </div>
+      <button 
+        className="reset-button"
+        onClick={() => {
+          if (window.confirm('¿Estás seguro que quieres resetear los scores?')) {
+            setScores({ team1: 0, team2: 0 });
+          }
+        }}
+      >
+        Reset
+      </button>
     </div>
   );
 };
