@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface Player {
   id: number;
@@ -16,6 +16,9 @@ interface MatchupCardProps {
 }
 
 const MatchupCard: React.FC<MatchupCardProps> = ({ matchup, index }) => {
+  const [team1Score, setTeam1Score] = useState(0);
+  const [team2Score, setTeam2Score] = useState(0);
+
   return (
     <div className="matchup-card">
       <h3>Matchup {index + 1}</h3>
@@ -25,6 +28,13 @@ const MatchupCard: React.FC<MatchupCardProps> = ({ matchup, index }) => {
           <p>
             {matchup.team1[0].name} & {matchup.team1[1].name}
           </p>
+          <div className="score">
+            <span>Ganados: {team1Score}</span>
+            <div className="score-buttons">
+              <button onClick={() => setTeam1Score(team1Score - 1)}>-</button>
+              <button onClick={() => setTeam1Score(team1Score + 1)}>+</button>
+            </div>
+          </div>
         </div>
         <div className="vs">VS</div>
         <div className="team">
@@ -32,10 +42,17 @@ const MatchupCard: React.FC<MatchupCardProps> = ({ matchup, index }) => {
           <p>
             {matchup.team2[0].name} & {matchup.team2[1].name}
           </p>
+          <div className="score">
+            <span>Ganados: {team2Score}</span>
+            <div className="score-buttons">
+              <button onClick={() => setTeam2Score(team2Score - 1)}>-</button>
+              <button onClick={() => setTeam2Score(team2Score + 1)}>+</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default MatchupCard; 
+export default MatchupCard;
