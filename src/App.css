@@ -111,7 +111,15 @@ p {
   border-radius: 8px;
   margin: 20px 0;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.individual-rankings,
+.team-rankings {
+  width: 100%;
 }
 
 .rankings h2 {
@@ -130,7 +138,8 @@ p {
   margin-bottom: 10px;
 }
 
-.individual-ranking {
+.individual-ranking,
+.team-ranking {
   display: grid;
   grid-template-columns: 80px 1fr 100px;
   padding: 10px;
@@ -138,16 +147,19 @@ p {
   border-bottom: 1px solid #444;
 }
 
-.individual-ranking:hover {
+.individual-ranking:hover,
+.team-ranking:hover {
   background-color: #363b45;
 }
 
-.individual-ranking .rank {
+.individual-ranking .rank,
+.team-ranking .rank {
   font-weight: bold;
   color: #61dafb;
 }
 
-.individual-ranking .points {
+.individual-ranking .points,
+.team-ranking .points {
   text-align: right;
   font-weight: bold;
 }
