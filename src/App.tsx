@@ -116,6 +116,35 @@ function App() {
       .catch(err => console.error('Failed to copy:', err));
   };
 
+  const importScores = () => {
+    const text = window.prompt('Pega los scores a importar:');
+    if (!text) return; // User cancelled the prompt
+    
+    const lines = text.split('\n');
+    const newScores: Scores = {};
+    
+    for (const line of lines) {
+      const [key, value] = line.split(': ');
+      if (key && value) {
+        try {
+          const index = key.replace('matchup-', '').replace('-scores', '');
+          const scoreData = JSON.parse(value);
+          newScores[index] = scoreData;
+          localStorage.setItem(key, value);
+        } catch (e) {
+          console.error('Failed to parse line:', line);
+        }
+      }
+    }
+
+    if (Object.keys(newScores).length > 0) {
+      setScores(prev => ({ ...prev, ...newScores }));
+      alert('Scores imported successfully!');
+    } else {
+      alert('No valid scores found in the pasted text');
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -133,6 +162,12 @@ function App() {
             onClick={copyLocalStorageKeys}
           >
             Copiar Scores
+          </button>
+          <button
+            className="import-keys-button"
+            onClick={importScores}
+          >
+            Importar Scores
           </button>
         </div>
 

@@ -183,3 +183,11 @@ p {
 .copy-keys-button:hover {
   background-color: #45a049;
 }
+
+.import-keys-button {
+  background-color: #2196f3;
+}
+
+.import-keys-button:hover {
+  background-color: #1976d2;
+}
