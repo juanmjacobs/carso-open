@@ -13,6 +13,10 @@ interface Matchup {
   team2: Player[];
 }
 
+interface Scores {
+  [key: string]: { team1: number; team2: number };
+}
+
 const PLAYERS: Player[] = [
   { id: 1, name: "Juan" },
   { id: 2, name: "Cedric" },
@@ -23,6 +27,17 @@ const PLAYERS: Player[] = [
 
 function App() {
   const [matchups, setMatchups] = useState<Matchup[]>([]);
+  const [scores, setScores] = useState<Scores>(() => {
+    const savedScores: Scores = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith('matchup-') && key.endsWith('-scores')) {
+        const index = key.replace('matchup-', '').replace('-scores', '');
+        savedScores[index] = JSON.parse(localStorage.getItem(key) || '{}');
+      }
+    }
+    return savedScores;
+  });
 
   useEffect(() => {
     const allMatchups: Matchup[] = [];
@@ -58,35 +73,60 @@ function App() {
     setMatchups(allMatchups);
   }, []);
 
+  const updateScore = (matchupIndex: number, team: 'team1' | 'team2', increment: number) => {
+    setScores(prev => {
+      const newScores: Record<string, { team1: number; team2: number }> = {
+        ...prev,
+        [matchupIndex]: {
+          ...prev[matchupIndex],
+          [team]: (prev[matchupIndex]?.[team] || 0) + increment
+        }
+      };
+      localStorage.setItem(`matchup-${matchupIndex}-scores`, JSON.stringify(newScores[matchupIndex]));
+      return newScores;
+    });
+  };
+
+  const resetScore = (matchupIndex: number) => {
+    setScores(prev => {
+      const newScores = { ...prev };
+      newScores[matchupIndex] = { team1: 0, team2: 0 };
+      localStorage.setItem(`matchup-${matchupIndex}-scores`, JSON.stringify(newScores[matchupIndex]));
+      return newScores;
+    });
+  };
+
+  const resetAllScores = () => {
+    if (window.confirm("¿Estás seguro que quieres borrar todos los scores guardados?")) {
+      setScores({});
+      for (let i = 0; i < matchups.length; i++) {
+        localStorage.removeItem(`matchup-${i}-scores`);
+      }
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Carso Open - Paddle Match Organizer</h1>
-        <Rankings players={PLAYERS} />
+        <Rankings players={PLAYERS} scores={scores} matchups={matchups} />
         <button
           className="reset-all-scores-button"
-          onClick={() => {
-            if (
-              window.confirm(
-                "¿Estás seguro que quieres borrar todos los scores guardados?"
-              )
-            ) {
-              // Clear all matchup scores from localStorage
-              for (let i = 0; i < matchups.length; i++) {
-                localStorage.removeItem(`matchup-${i}-scores`);
-              }
-              // Force a re-render of all matchups
-              setMatchups([...matchups]);
-              window.location.reload();
-            }
-          }}
+          onClick={resetAllScores}
         >
           Resetear Scores
         </button>
 
         <div className="matchups-container">
           {matchups.map((matchup, index) => (
-            <MatchupCard key={index} matchup={matchup} index={index} />
+            <MatchupCard 
+              key={index} 
+              matchup={matchup} 
+              index={index}
+              scores={scores[index] || { team1: 0, team2: 0 }}
+              onUpdateScore={updateScore}
+              onResetScore={resetScore}
+            />
           ))}
         </div>
       </header>

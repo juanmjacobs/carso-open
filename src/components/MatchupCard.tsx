@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 interface Player {
   id: number;
@@ -13,27 +13,18 @@ interface Matchup {
 interface MatchupCardProps {
   matchup: Matchup;
   index: number;
+  scores: { team1: number; team2: number };
+  onUpdateScore: (matchupIndex: number, team: 'team1' | 'team2', increment: number) => void;
+  onResetScore: (matchupIndex: number) => void;
 }
 
-const MatchupCard: React.FC<MatchupCardProps> = ({ matchup, index }) => {
-  const storageKey = `matchup-${index}-scores`;
-  
-  const [scores, setScores] = useState(() => {
-    const savedScores = localStorage.getItem(storageKey);
-    return savedScores ? JSON.parse(savedScores) : { team1: 0, team2: 0 };
-  });
-
-  useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(scores));
-  }, [scores, storageKey]);
-
-  const updateScore = (team: 'team1' | 'team2', increment: number) => {
-    setScores((prev: { team1: number; team2: number }) => ({
-      ...prev,
-      [team]: prev[team] + increment
-    }));
-  };
-
+const MatchupCard: React.FC<MatchupCardProps> = ({ 
+  matchup, 
+  index, 
+  scores,
+  onUpdateScore,
+  onResetScore
+}) => {
   return (
     <div className="matchup-card">
       <h3>Matchup {index + 1}</h3>
@@ -46,8 +37,8 @@ const MatchupCard: React.FC<MatchupCardProps> = ({ matchup, index }) => {
           <div className="score">
             <span>Ganados: {scores.team1}</span>
             <div className="score-buttons">
-              <button onClick={() => updateScore('team1', -1)}>-</button>
-              <button onClick={() => updateScore('team1', 1)}>+</button>
+              <button onClick={() => onUpdateScore(index, 'team1', -1)}>-</button>
+              <button onClick={() => onUpdateScore(index, 'team1', 1)}>+</button>
             </div>
           </div>
         </div>
@@ -60,8 +51,8 @@ const MatchupCard: React.FC<MatchupCardProps> = ({ matchup, index }) => {
           <div className="score">
             <span>Ganados: {scores.team2}</span>
             <div className="score-buttons">
-              <button onClick={() => updateScore('team2', -1)}>-</button>
-              <button onClick={() => updateScore('team2', 1)}>+</button>
+              <button onClick={() => onUpdateScore(index, 'team2', -1)}>-</button>
+              <button onClick={() => onUpdateScore(index, 'team2', 1)}>+</button>
             </div>
           </div>
         </div>
@@ -70,7 +61,7 @@ const MatchupCard: React.FC<MatchupCardProps> = ({ matchup, index }) => {
         className="reset-button"
         onClick={() => {
           if (window.confirm('¿Estás seguro que quieres resetear los scores?')) {
-            setScores({ team1: 0, team2: 0 });
+            onResetScore(index);
           }
         }}
       >

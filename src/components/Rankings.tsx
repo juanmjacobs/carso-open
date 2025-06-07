@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import IndividualRanking from './IndividualRanking';
 
 interface Player {
@@ -6,41 +6,46 @@ interface Player {
   name: string;
 }
 
-interface RankingsProps {
-  players: Player[];
+interface Matchup {
+  team1: Player[];
+  team2: Player[];
 }
 
-const Rankings: React.FC<RankingsProps> = ({ players }) => {
-  const [playerPoints, setPlayerPoints] = useState<{ [key: string]: number }>({});
+interface Scores {
+  [key: string]: { team1: number; team2: number };
+}
 
-  useEffect(() => {
-    // Calculate points for each player
-    const points: { [key: string]: number } = {};
-    
-    // Initialize points for all players
-    players.forEach(player => {
-      points[player.name] = 0;
-    });
+interface RankingsProps {
+  players: Player[];
+  scores: Scores;
+  matchups: Matchup[];
+}
 
-    // Calculate points from localStorage
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key?.startsWith('matchup-') && key.endsWith('-scores')) {
-        const scores = JSON.parse(localStorage.getItem(key) || '{}');
-        if(scores.team1) {
-          // Add points for each scoring point
-          points[players[0].name] += scores.team1;
-          points[players[1].name] += scores.team1;
-        }
-        if(scores.team2) {
-          points[players[2].name] += scores.team2;
-          points[players[3].name] += scores.team2;
-        }
+const Rankings: React.FC<RankingsProps> = ({ players, scores, matchups }) => {
+  // Calculate points for each player
+  const playerPoints: { [key: string]: number } = {};
+  
+  // Initialize points for all players
+  players.forEach(player => {
+    playerPoints[player.name] = 0;
+  });
+
+  // Calculate points from scores
+  Object.entries(scores).forEach(([matchupIndex, matchupScores]) => {
+    const matchup = matchups[parseInt(matchupIndex)];
+    if (matchup) {
+      if (matchupScores.team1) {
+        matchup.team1.forEach(player => {
+          playerPoints[player.name] += matchupScores.team1;
+        });
+      }
+      if (matchupScores.team2) {
+        matchup.team2.forEach(player => {
+          playerPoints[player.name] += matchupScores.team2;
+        });
       }
     }
-
-    setPlayerPoints(points);
-  }, [players]);
+  });
 
   // Sort players by points
   const sortedPlayers = [...players].sort((a, b) => 
