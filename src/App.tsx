@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import MatchupCard from "./components/MatchupCard";
+import Rankings from "./components/Rankings";
 
 interface Player {
   id: number;
@@ -61,6 +62,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Carso Open - Paddle Match Organizer</h1>
+        <Rankings players={PLAYERS} />
         <button
           className="reset-all-scores-button"
           onClick={() => {

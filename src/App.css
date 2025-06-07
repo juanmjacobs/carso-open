@@ -104,3 +104,50 @@ p {
   margin: 0;
   font-size: 16px;
 }
+
+.rankings {
+  background-color: #282c34;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.rankings h2 {
+  color: white;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.rankings-header {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px;
+  padding: 10px;
+  color: #61dafb;
+  font-weight: bold;
+  border-bottom: 1px solid #61dafb;
+  margin-bottom: 10px;
+}
+
+.individual-ranking {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px;
+  padding: 10px;
+  color: white;
+  border-bottom: 1px solid #444;
+}
+
+.individual-ranking:hover {
+  background-color: #363b45;
+}
+
+.individual-ranking .rank {
+  font-weight: bold;
+  color: #61dafb;
+}
+
+.individual-ranking .points {
+  text-align: right;
+  font-weight: bold;
+}
