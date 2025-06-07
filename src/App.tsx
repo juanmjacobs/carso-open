@@ -149,7 +149,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Carso Open - Paddle Match Organizer</h1>
-        <Rankings players={PLAYERS} scores={scores} matchups={matchups} />
         <div className="button-container">
           <button
             className="reset-all-scores-button"
@@ -183,6 +182,8 @@ function App() {
             />
           ))}
         </div>
+
+        <Rankings players={PLAYERS} scores={scores} matchups={matchups} />
       </header>
     </div>
   );
