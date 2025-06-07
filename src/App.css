@@ -104,3 +104,102 @@ p {
   margin: 0;
   font-size: 16px;
 }
+
+.rankings {
+  background-color: #282c34;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.individual-rankings,
+.team-rankings {
+  width: 100%;
+}
+
+.rankings h2 {
+  color: white;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.rankings-header {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px;
+  padding: 10px;
+  color: #61dafb;
+  font-weight: bold;
+  border-bottom: 1px solid #61dafb;
+  margin-bottom: 10px;
+}
+
+.individual-ranking,
+.team-ranking {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px;
+  padding: 10px;
+  color: white;
+  border-bottom: 1px solid #444;
+}
+
+.individual-ranking:hover,
+.team-ranking:hover {
+  background-color: #363b45;
+}
+
+.individual-ranking .rank,
+.team-ranking .rank {
+  font-weight: bold;
+  color: #61dafb;
+}
+
+.individual-ranking .points,
+.team-ranking .points {
+  text-align: right;
+  font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.reset-all-scores-button,
+.copy-keys-button {
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-all-scores-button:hover,
+.copy-keys-button:hover {
+  background-color: #4fa8c7;
+}
+
+.copy-keys-button {
+  background-color: #4caf50;
+}
+
+.copy-keys-button:hover {
+  background-color: #45a049;
+}
+
+.import-keys-button {
+  background-color: #2196f3;
+}
+
+.import-keys-button:hover {
+  background-color: #1976d2;
+}
