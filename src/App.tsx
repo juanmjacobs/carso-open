@@ -105,17 +105,36 @@ function App() {
     }
   };
 
+  const copyLocalStorageKeys = () => {
+    const keys = Object.keys(localStorage)
+      .filter(key => key.startsWith('matchup-') && key.endsWith('-scores'))
+      .map(key => `${key}: ${localStorage.getItem(key)}`)
+      .join('\n');
+    
+    navigator.clipboard.writeText(keys)
+      .then(() => alert('Local storage keys copied to clipboard!'))
+      .catch(err => console.error('Failed to copy:', err));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Carso Open - Paddle Match Organizer</h1>
         <Rankings players={PLAYERS} scores={scores} matchups={matchups} />
-        <button
-          className="reset-all-scores-button"
-          onClick={resetAllScores}
-        >
-          Resetear Scores
-        </button>
+        <div className="button-container">
+          <button
+            className="reset-all-scores-button"
+            onClick={resetAllScores}
+          >
+            Resetear Scores
+          </button>
+          <button
+            className="copy-keys-button"
+            onClick={copyLocalStorageKeys}
+          >
+            Copiar Scores
+          </button>
+        </div>
 
         <div className="matchups-container">
           {matchups.map((matchup, index) => (

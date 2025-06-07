@@ -151,3 +151,35 @@ p {
   text-align: right;
   font-weight: bold;
 }
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.reset-all-scores-button,
+.copy-keys-button {
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-all-scores-button:hover,
+.copy-keys-button:hover {
+  background-color: #4fa8c7;
+}
+
+.copy-keys-button {
+  background-color: #4caf50;
+}
+
+.copy-keys-button:hover {
+  background-color: #45a049;
+}
