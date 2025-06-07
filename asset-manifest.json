@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/carso-open/static/css/main.8d92f4df.css",
-    "main.js": "/carso-open/static/js/main.3f0918d4.js",
+    "main.css": "/carso-open/static/css/main.c1e0663e.css",
+    "main.js": "/carso-open/static/js/main.9f4ba108.js",
     "static/js/453.393079de.chunk.js": "/carso-open/static/js/453.393079de.chunk.js",
     "index.html": "/carso-open/index.html",
-    "main.8d92f4df.css.map": "/carso-open/static/css/main.8d92f4df.css.map",
-    "main.3f0918d4.js.map": "/carso-open/static/js/main.3f0918d4.js.map",
+    "main.c1e0663e.css.map": "/carso-open/static/css/main.c1e0663e.css.map",
+    "main.9f4ba108.js.map": "/carso-open/static/js/main.9f4ba108.js.map",
     "453.393079de.chunk.js.map": "/carso-open/static/js/453.393079de.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8d92f4df.css",
-    "static/js/main.3f0918d4.js"
+    "static/css/main.c1e0663e.css",
+    "static/js/main.9f4ba108.js"
   ]
 }
